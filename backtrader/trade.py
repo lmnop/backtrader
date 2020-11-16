@@ -56,7 +56,7 @@ class TradeHistory(AutoOrderedDict):
     '''
 
     def __init__(self,
-                 status, dt, barlen, size, price, value, pnl, pnlcomm, tz, event=None):
+                 status, dt, barlen, size, price, value, pnl, pnlcomm, tz):
         '''Initializes the object to the current status of the Trade'''
         super(TradeHistory, self).__init__()
         self.status.status = status
@@ -68,13 +68,6 @@ class TradeHistory(AutoOrderedDict):
         self.status.pnl = pnl
         self.status.pnlcomm = pnlcomm
         self.status.tz = tz
-        if event is not None:
-            self.event = event
-
-    def __reduce__(self):
-        return (self.__class__, (self.status.status, self.status.dt, self.status.barlen, self.status.size,
-                                 self.status.price, self.status.value, self.status.pnl, self.status.pnlcomm,
-                                 self.status.tz, self.event, ))
 
     def doupdate(self, order, size, price, commission):
         '''Used to fill the ``update`` part of the history entry'''
@@ -89,6 +82,11 @@ class TradeHistory(AutoOrderedDict):
     def datetime(self, tz=None, naive=True):
         '''Returns a datetime for the time the update event happened'''
         return num2date(self.status.dt, tz or self.status.tz, naive)
+
+    def __reduce__(self):
+        return (self.__class__, (self.status.status, self.status.dt, self.status.barlen, self.status.size,
+                             self.status.price, self.status.value, self.status.pnl, self.status.pnlcomm,
+                             self.status.tz,))
 
 
 class Trade(object):
