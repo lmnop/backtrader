@@ -813,7 +813,9 @@ class Plot_OldSync(with_metaclass(MetaParams, object)):
             a = axdatamaster or ax
             a.set_yscale('log')
 
-    def show(self):
+    def show(self, title):
+        fig = self.mpyplot.gcf()
+        fig.canvas.set_window_title(title)
         self.mpyplot.show()
 
     def savefig(self, fig, filename, width=16, height=9, dpi=300, tight=True):

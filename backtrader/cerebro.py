@@ -982,7 +982,7 @@ class Cerebro(with_metaclass(MetaParams, object)):
 
         # pfillers2 = {self.datas[i]: self._plotfillers2[i]
         # for i, x in enumerate(self._plotfillers2)}
-
+        title = kwargs.pop('title')
         figs = []
         for stratlist in self.runstrats:
             for si, strat in enumerate(stratlist):
@@ -993,7 +993,7 @@ class Cerebro(with_metaclass(MetaParams, object)):
 
                 figs.append(rfig)
 
-            plotter.show()
+            plotter.show(title)
 
         return figs
 
